@@ -1,0 +1,11 @@
+{
+    "name": "pcanbasic",
+    "version-string": "1.0.0",
+    "description": "pcanbasic cpp lib",
+    "dependencies": [
+        {
+            "name": "vcpkg-cmake",
+            "host": true
+        }
+    ]
+}

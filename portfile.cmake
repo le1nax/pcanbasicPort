@@ -1,0 +1,38 @@
+vcpkg_from_github(
+  OUT_SOURCE_PATH SOURCE_PATH
+  REPO le1nax/medit-libs
+  REF 2355b33862ee5e18b491f1e0f5d080a9ec698782
+  SHA512 7b2f405b65f3bf55199c26085830736d1a76b0c796540ec5337f53a569f55877c1ad88d878c1927d1b48c5ec046b16eb8de8413629a92936c62fc8f16d58bfb4
+  HEAD_REF master
+)
+
+# vcpkg_cmake_configure(
+#   SOURCE_PATH "${SOURCE_PATH}"
+# )
+# vcpkg_cmake_install()
+# vcpkg_fixup_cmake_targets()
+
+file(GLOB headers "${SOURCE_PATH}/include/*")
+file(COPY ${headers} DESTINATION "${CURRENT_PACKAGES_DIR}/include")
+
+if(VCPKG_TARGET_IS_WINDOWS)
+  if(VCPKG_TARGET_ARCHITECTURE STREQUAL "x64")
+    file(COPY "${SOURCE_PATH}/binx64/PCANBasic.dll" DESTINATION "${CURRENT_PACKAGES_DIR}/bin")
+    file(COPY "${SOURCE_PATH}/libx64/PCANBasic.lib" DESTINATION "${CURRENT_PACKAGES_DIR}/lib")
+    file(COPY "${SOURCE_PATH}/binx64/PCANBasic.dll" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/bin")
+    file(COPY "${SOURCE_PATH}/libx64/PCANBasic.lib" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/lib")
+  elseif(VCPKG_TARGET_ARCHITECTURE STREQUAL "x86")
+    file(COPY "${SOURCE_PATH}/binx86/PCANBasic.dll" DESTINATION "${CURRENT_PACKAGES_DIR}/bin")
+    file(COPY "${SOURCE_PATH}/libx86/PCANBasic.lib" DESTINATION "${CURRENT_PACKAGES_DIR}/lib")
+    file(COPY "${SOURCE_PATH}/binx86/PCANBasic.dll" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/bin")
+    file(COPY "${SOURCE_PATH}/libx86/PCANBasic.lib" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/lib")
+  endif()
+elseif(VCPKG_TARGET_IS_LINUX)
+  if(VCPKG_TARGET_ARCHITECTURE STREQUAL "x64")
+    file(COPY "${SOURCE_PATH}/libx64/PCANBasic.so" DESTINATION "${CURRENT_PACKAGES_DIR}/lib")
+    file(COPY "${SOURCE_PATH}/libx64/PCANBasic.so" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/lib")
+  elseif(VCPKG_TARGET_ARCHITECTURE STREQUAL "x86")
+    file(COPY "${SOURCE_PATH}/libx86/PCANBasic.so" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/lib")
+    file(COPY "${SOURCE_PATH}/libx86/PCANBasic.so" DESTINATION "${CURRENT_PACKAGES_DIR}/debug/lib")
+  endif()
+endif()
